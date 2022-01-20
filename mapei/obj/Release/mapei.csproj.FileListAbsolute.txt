@@ -1,0 +1,16 @@
+C:\Users\marko.spasojevic\Downloads\mapei-master\mapei\bin\Release\mapei.exe.config
+C:\Users\marko.spasojevic\Downloads\mapei-master\mapei\bin\Release\mapei.exe
+C:\Users\marko.spasojevic\Downloads\mapei-master\mapei\bin\Release\mapei.pdb
+C:\Users\marko.spasojevic\Downloads\mapei-master\mapei\obj\Release\mapei.csproj.AssemblyReference.cache
+C:\Users\marko.spasojevic\Downloads\mapei-master\mapei\obj\Release\mapei.csproj.ResolveComReference.cache
+C:\Users\marko.spasojevic\Downloads\mapei-master\mapei\obj\Release\mapei.Baza.resources
+C:\Users\marko.spasojevic\Downloads\mapei-master\mapei\obj\Release\mapei.FrmIzmeniObrisi.resources
+C:\Users\marko.spasojevic\Downloads\mapei-master\mapei\obj\Release\mapei.FrmIzvestaj.resources
+C:\Users\marko.spasojevic\Downloads\mapei-master\mapei\obj\Release\mapei.FrmDodaj.resources
+C:\Users\marko.spasojevic\Downloads\mapei-master\mapei\obj\Release\mapei.FrmPregledIzvestaja.resources
+C:\Users\marko.spasojevic\Downloads\mapei-master\mapei\obj\Release\mapei.Mapei.resources
+C:\Users\marko.spasojevic\Downloads\mapei-master\mapei\obj\Release\mapei.Properties.Resources.resources
+C:\Users\marko.spasojevic\Downloads\mapei-master\mapei\obj\Release\mapei.csproj.GenerateResource.cache
+C:\Users\marko.spasojevic\Downloads\mapei-master\mapei\obj\Release\mapei.csproj.CoreCompileInputs.cache
+C:\Users\marko.spasojevic\Downloads\mapei-master\mapei\obj\Release\mapei.exe
+C:\Users\marko.spasojevic\Downloads\mapei-master\mapei\obj\Release\mapei.pdb
