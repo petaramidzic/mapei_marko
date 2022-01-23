@@ -29,10 +29,10 @@ namespace mapei
         {
             try
             {
-                double plastika;
-                double papir;
-                double celik;
-                double aluminijum;
+                double plastika=0;
+                double papir=0;
+                double celik=0;
+                double aluminijum=0;
 
 
 
@@ -57,10 +57,41 @@ namespace mapei
                 conn.Close();
                 var defaultCultureForDb = new CultureInfo("en-US");
 
+                // Naziv_ambalaze
+                // Kolicina
+                for (var index = 0; index < ds.Tables["Otpad"].Rows.Count; index++) {
+                    switch (ds.Tables["Otpad"].Rows[index]["Naziv_ambalaze"])
+                    {
+                        case "aluminijum":
+                            aluminijum = Convert.ToDouble(ds.Tables["Otpad"].Rows[index]["Kolicina"], defaultCultureForDb.NumberFormat);
+
+                            break;
+                        case "papir":
+                            papir = Convert.ToDouble(ds.Tables["Otpad"].Rows[index]["Kolicina"], defaultCultureForDb.NumberFormat);
+                            break;
+                        case
+                            "plastika":
+                            plastika = Convert.ToDouble(ds.Tables["Otpad"].Rows[index]["Kolicina"], defaultCultureForDb.NumberFormat);
+                            break;
+                        case "celik":
+                            celik = Convert.ToDouble(ds.Tables["Otpad"].Rows[index]["Kolicina"], defaultCultureForDb.NumberFormat);
+                            break;
+                    }
+                }
+                /*
                 aluminijum = Convert.ToDouble(ds.Tables["Otpad"].Rows[0]["Kolicina"],defaultCultureForDb.NumberFormat);
+                MessageBox.Show(Convert.ToString(aluminijum));
                 papir = Convert.ToDouble(ds.Tables["Otpad"].Rows[1]["Kolicina"],defaultCultureForDb.NumberFormat);
+                MessageBox.Show(Convert.ToString(papir));
+
+                MessageBox.Show(Convert.ToString(ds.Tables["Otpad"].Rows[2]["Kolicina"]));
+                
+
                 celik = Convert.ToDouble(ds.Tables["Otpad"].Rows[2]["Kolicina"],defaultCultureForDb.NumberFormat);
+                
                 plastika = Convert.ToDouble(ds.Tables["Otpad"].Rows[3]["Kolicina"],defaultCultureForDb.NumberFormat);
+                MessageBox.Show(Convert.ToString(plastika));
+                */
 
                 cmd2.CommandText =
                     ("INSERT INTO Izvestaj (naziv_import_tabele, datum_kreiranja_izvestaja, datum_od, datum_do, plastika, papir, celik, aluminijum) VALUES ('" +
