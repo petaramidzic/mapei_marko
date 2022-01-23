@@ -20,6 +20,9 @@ namespace mapei
         OleDbDataAdapter adapter_proizvodi;
         string fileNameExcel;
         string fileNameAccess = @"C:\mapei\mapei.mdb";
+        //import podataka iz baze
+
+        
 
 
 
@@ -27,6 +30,7 @@ namespace mapei
         {
             InitializeComponent();
             ds = _ds;
+
             
         }        
 
@@ -35,10 +39,13 @@ namespace mapei
             OleDbCommand cmd = conn.CreateCommand();
             conn.Open();
             OleDbDataAdapter adapter = new OleDbDataAdapter(cmd);
-            cmd.CommandText = ("SELECT Import.id_proizvoda, Import.Naziv FROM Import LEFT OUTER JOIN Proizvodi ON Import.id_proizvoda = Proizvodi.id_proizvoda WHERE Proizvodi.id_proizvoda IS NULL");
+            //cmd.CommandText = ("SELECT Import.id_proizvoda, Import.Naziv FROM Import LEFT OUTER JOIN Proizvodi ON Import.id_proizvoda = Proizvodi.id_proizvoda WHERE Proizvodi.id_proizvoda IS NULL");
             //
 
-            if(ds.Tables["Import_razlika_ID"] == null)
+            cmd.CommandText = ("SELECT import_privremeno.id_proizvoda, import_privremeno.Naziv FROM import_privremeno WHERE import_privremeno.id_proizvoda IN (SELECT Import.id_proizvoda FROM Import WHERE Import.id_proizvoda NOT IN (SELECT Proizvodi.id_proizvoda FROM Proizvodi)) GROUP BY import_privremeno.id_proizvoda, import_privremeno.Naziv;");
+
+
+            if (ds.Tables["Import_razlika_ID"] == null)
             {                
                 adapter.Fill(ds, "Import_razlika_ID");
             }
@@ -52,8 +59,8 @@ namespace mapei
         }
 
         private void btnImport_Click(object sender, EventArgs e)
-        {            
-                OpenFileDialog openfile = new OpenFileDialog();
+        { 
+            OpenFileDialog openfile = new OpenFileDialog();
                 openfile.Filter = "Excel files | *.xls;";
                 openfile.Title = "Izaberite import datoteku";
 
@@ -98,9 +105,23 @@ namespace mapei
             cmdExcel.CommandType = CommandType.Text;
             cmdExcel.CommandText = "SELECT * FROM [Sheet1$]";
             int rowNumber = 0;
+
             
+            //Import baze u tabelu Proizvodi
+
+            OleDbCommand cmd3 = new OleDbCommand("SELECT * FROM Proizvodi", conn);
+            conn.Open();
+            OleDbDataAdapter adapter_proizvodi = new OleDbDataAdapter(cmd3);
+            adapter_proizvodi.Fill(ds, "Proizvodi");
+            conn.Close();
+
             try
             {
+
+                
+
+
+
                 //Brisanje sadrzaja tabele import_privremeno 
                 OleDbCommand cmd = conn.CreateCommand();
                 conn.Open();
@@ -135,12 +156,25 @@ namespace mapei
                     {
                         break;
                     }
-                    rowNumber++;
+                    rowNumber++; 
+
                     //Assign values to access command parameters
                     param0.Value = drExcel[0].ToString();
                     param1.Value = drExcel[1].ToString();
                     param2.Value = drExcel[2].ToString();
-                    param3.Value = drExcel[3].ToString();
+                    param3.Value = drExcel[3].ToString();                   
+
+                       
+                    
+                    
+                    //if (ds.Tables["Proizvodi"].Rows[rowNumber][0].ToString() == param0.ToString() && ds.Tables["Proizvodi"].Rows[rowNumber][1].ToString() == param1.ToString())
+                    //{
+                        
+                    //}
+                    //else
+                    //{
+                       // MessageBox.Show(rowNumber.ToString());
+                    //}
 
                     //Insert values in access
                     cmdAccess.ExecuteNonQuery();
@@ -157,14 +191,15 @@ namespace mapei
                 //sumiranje iz import_privremeno tabele u Import tabelu
                 cmd1.CommandText = ("DELETE FROM Import");
                 cmd1.ExecuteNonQuery();
-                cmd1.CommandText = ("INSERT INTO Import SELECT import_privremeno.id_proizvoda, import_privremeno.Naziv, import_privremeno.jm, Sum(import_privremeno.kolicina) AS kolicina FROM import_privremeno GROUP BY import_privremeno.id_proizvoda, import_privremeno.Naziv, import_privremeno.jm;");
+                cmd1.CommandText = ("INSERT INTO Import SELECT Sum(import_privremeno.kolicina) AS kolicina, import_privremeno.jm, import_privremeno.id_proizvoda FROM import_privremeno GROUP BY import_privremeno.id_proizvoda,import_privremeno.jm;");
                 cmd1.ExecuteNonQuery();
                 conn.Close();
 
-                OleDbCommand cmd2 = conn.CreateCommand();
+               
+                    OleDbCommand cmd2 = conn.CreateCommand();
                 conn.Open();
                 OleDbDataAdapter adapter = new OleDbDataAdapter(cmd2);
-                cmd2.CommandText = ("SELECT Import.id_proizvoda, Import.Naziv FROM Import LEFT OUTER JOIN Proizvodi ON Import.id_proizvoda = Proizvodi.id_proizvoda WHERE Proizvodi.id_proizvoda IS NULL");
+                cmd2.CommandText = ("SELECT import_privremeno.id_proizvoda, import_privremeno.Naziv FROM import_privremeno WHERE import_privremeno.id_proizvoda IN (SELECT Import.id_proizvoda FROM Import WHERE Import.id_proizvoda NOT IN (SELECT Proizvodi.id_proizvoda FROM Proizvodi)) GROUP BY import_privremeno.id_proizvoda, import_privremeno.Naziv;");
 
                 if (ds.Tables["Import_razlika_ID"] == null)
                 {

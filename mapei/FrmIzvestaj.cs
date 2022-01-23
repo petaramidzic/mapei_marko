@@ -93,8 +93,10 @@ namespace mapei
                 MessageBox.Show(Convert.ToString(plastika));
                 */
 
+
+                //ukoliko su vrednosti pomesane u tabeli izvestaju promeni celik i papir redosled!!!!
                 cmd2.CommandText =
-                    ("INSERT INTO Izvestaj (naziv_import_tabele, datum_kreiranja_izvestaja, datum_od, datum_do, plastika, papir, celik, aluminijum) VALUES ('" +
+                    ("INSERT INTO Izvestaj (naziv_import_tabele, datum_kreiranja_izvestaja, datum_od, datum_do, plastika, celik, papir, aluminijum) VALUES ('" +
                      txtNaziv.Text + "','" + DateTime.Now.ToString(defaultCultureForDb.DateTimeFormat) + "','" + dtpOd.Value.ToString(defaultCultureForDb.DateTimeFormat) + "','" +
                      dtpDo.Value.ToString(defaultCultureForDb.DateTimeFormat) + "','" + plastika.ToString(defaultCultureForDb) + "','" + celik.ToString(defaultCultureForDb) + "','" + papir.ToString(defaultCultureForDb) + "','" +
                      aluminijum.ToString(defaultCultureForDb) + "');");
